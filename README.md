@@ -31,6 +31,10 @@ export default {
 </script>
 ```
 
+## ScreenShot
+
+![vue-markdown-it](https://github.com/ravenq/vue-markdown-it/blob/master/static/vue-markdown-it.png)
+
 ## License
 
 [MIT](https://github.com/ravenq/vue-markdown-it/blob/master/LICENSE)
