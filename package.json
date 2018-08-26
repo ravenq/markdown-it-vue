@@ -2,8 +2,11 @@
   "name": "markdown-it-vue",
   "version": "1.0.0",
   "description": "The vue lib for markdown-it",
-  "author": "ravenq",
-  "email": "flw_dream@126.com",
+  "homepage": "https://github.com/ravenq/markdown-it-vue",
+  "author": {
+    "name": "ravenq",
+    "e-mail": "flw_dream@126.com"
+  },
   "main": "src/index.vue",
   "license": "MIT",
   "repository": {
