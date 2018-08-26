@@ -1,5 +1,5 @@
 export default `
-# vue-markdown-it
+# markdown-it-vue
 
 ## GitHub Table of Contents
 
@@ -143,7 +143,7 @@ The width and height is the size for chart container.
 ## code
 
 \`\`\`bash
-npm install vue-markdown-it
+npm install markdown-it-vue
 \`\`\`
 
 ## table

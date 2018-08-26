@@ -1,5 +1,5 @@
 <template>
-  <div class="markdown-body" ref="vue-markdown-it-container"></div>
+  <div class="markdown-body" ref="markdown-it-vue-container"></div>
 </template>
 
 <script>
@@ -31,7 +31,7 @@ import echarts from 'echarts'
 import mermaid from 'mermaid'
 
 export default {
-  name: 'vue-markdown-it',
+  name: 'markdown-it-vue',
   props: {
     content: {
       type: String
@@ -42,7 +42,7 @@ export default {
       immediate: true,
       handler (val) {
         this.$nextTick(_ => {
-          this.$refs['vue-markdown-it-container'].innerHTML = this.md.render(val)
+          this.$refs['markdown-it-vue-container'].innerHTML = this.md.render(val)
           // render echarts
           document.querySelectorAll('.md-echarts').forEach(element => {
             try {

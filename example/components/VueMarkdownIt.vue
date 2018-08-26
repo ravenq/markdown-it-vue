@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <textarea class="md-text" rows="10" v-model="content"/>
-    <vue-markdown-it class="md-body" :content="content"/>
+    <markdown-it-vue class="md-body" :content="content"/>
   </div>
 </template>
 
 <script>
 import MarkdownText from './example'
-import VueMarkdownIt from '../../src'
+import MarkdownItVue from '../../src'
 export default {
   components: {
-    VueMarkdownIt
+    MarkdownItVue
   },
   data () {
     return {
