@@ -2,7 +2,8 @@
   "name": "vue-markdown-it",
   "version": "1.0.0",
   "description": "The vue lib for markdown-it",
-  "author": "flw_dream@126.com <ravenq>",
+  "author": "ravenq",
+  "email": "flw_dream@126.com",
   "main": "src/index.vue",
   "license": "MIT",
   "repository": {
@@ -12,6 +13,13 @@
   "bugs": {
     "url": "https://github.com/ravenq/vue-markdown-it/issues"
   },
+  "keywords": [
+    "markdown",
+    "markdown-it",
+    "markdown-it-plugin",
+    "vue",
+    "vue-markdown-it"
+  ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
