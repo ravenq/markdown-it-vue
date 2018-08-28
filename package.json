@@ -1,13 +1,13 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "The vue lib for markdown-it",
   "homepage": "https://github.com/ravenq/markdown-it-vue",
   "author": {
     "name": "ravenq",
     "e-mail": "flw_dream@126.com"
   },
-  "main": "src/index.vue",
+  "main": "dist/markdown-it-vue.mini.js",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,14 +23,20 @@
     "vue",
     "markdown-it-vue"
   ],
+  "files": [
+    "dist",
+    "doc",
+    "src"
+  ],
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "e2e": "node test/e2e/runner.js",
+    "build": "npm run build:lib && npm run build:exaple",
+    "build:lib": "node build/build.js",
+    "build:example": "node example/build/build.js",
+    "dev": "webpack-dev-server --inline --progress --config example/build/webpack.dev.conf.js",
+    "unit": "jest --config example/test/unit/jest.conf.js --coverage",
+    "e2e": "node example/test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "lint": "eslint --ext .js,.vue src example/test/unit example/test/e2e/specs"
   },
   "dependencies": {
     "echarts": "^4.1.0",

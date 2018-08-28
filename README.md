@@ -12,6 +12,7 @@ npm install markdown-it-vue
 * Official markdown syntax.
 * GFM TOC
 * GFM style
+* emoji
 * [mermaid charts](http://knsv.github.io/mermaid/)
 * [Echarts](http://echarts.baidu.com)
 * Subscript/Superscript
@@ -64,7 +65,7 @@ export default {
 
 ## ScreenShot
 
-![markdown-it-vue](https://github.com/ravenq/markdown-it-vue/blob/master/static/markdown-it-vue.png)
+![markdown-it-vue](https://github.com/ravenq/markdown-it-vue/blob/master/doc/markdown-it-vue.png?raw=true)
 
 ## License
 
