@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The vue lib for markdown-it",
   "homepage": "https://github.com/ravenq/markdown-it-vue",
   "author": {
@@ -29,7 +29,7 @@
     "src"
   ],
   "scripts": {
-    "build": "npm run build:lib && npm run build:exaple",
+    "build": "npm run build:lib && npm run build:example",
     "build:lib": "node build/build.js",
     "build:example": "node example/build/build.js",
     "dev": "webpack-dev-server --inline --progress --config example/build/webpack.dev.conf.js",

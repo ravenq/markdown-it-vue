@@ -22,12 +22,12 @@ const createLintingRule = () => ({
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    'markdown-it-vue': './src/index.vue'
+    'markdown-it-vue': './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].mini.js',
-    library: 'VueMarkdown',
+    library: 'MarkdownItVue',
     libraryTarget: 'umd'
   },
   resolve: {
