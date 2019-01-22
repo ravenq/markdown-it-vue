@@ -9,7 +9,7 @@ Note: Only \`h2\` and \`h3\` are shown in toc.
 
 ## mermaid charts
 
-### Flowchart
+### mermaid Flowchart
 
 [Flowchart Syntax](http://knsv.github.io/mermaid/#flowcharts-basic-syntax)
 
@@ -152,5 +152,31 @@ npm install markdown-it-vue
 | ------------- | ------------- |
 | Content Cell  | Content Cell  |
 | Content Cell  | Content Cell  |
+
+## flowchart.js
+
+\`\`\`flowchart.js
+st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+para=>parallel: parallel tasks
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->para
+c2(true)->io->e
+c2(false)->e
+
+para(path1, bottom)->sub1(left)->op1
+para(path2, right)->op2->e
+
+st@>op1({"stroke":"Red"})@>cond({"stroke":"Red","stroke-width":6,"arrow-end":"classic-wide-long"})@>c2({"stroke":"Red"})@>op2({"stroke":"Red"})@>e({"stroke":"Red"})
+\`\`\`
 
 `

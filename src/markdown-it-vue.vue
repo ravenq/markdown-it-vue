@@ -22,6 +22,7 @@ import MarkdownItGithubToc from 'markdown-it-github-toc'
 import MarkdownItSourceMap from 'markdown-it-source-map'
 import MarkdownItEcharts from './markdown-it-plugin-echarts'
 import MarkdownItMermaid from './markdown-it-plugin-mermaid'
+import MarkdownItFlowchart from './markdown-it-plugin-flowchart'
 import 'github-markdown-css'
 import 'markdown-it-latex/dist/index.css'
 import 'markdown-it-icons/dist/index.css'
@@ -29,6 +30,7 @@ import 'markdown-it-highlight/dist/index.css'
 
 import echarts from 'echarts'
 import mermaid from 'mermaid'
+import flowchart from 'flowchart.js'
 
 export default {
   name: 'markdown-it-vue',
@@ -55,6 +57,17 @@ export default {
           })
           // render mermaid
           mermaid.init(undefined, document.querySelectorAll('.mermaid'))
+          // render flowchart
+          document.querySelectorAll('.md-flowchart').forEach(element => {
+            try {
+              let code = element.textContent
+              let chart = flowchart.parse(code)
+              element.textContent = ''
+              chart.drawSVG(element)
+            } catch (e) {
+              element.outerHTML = `<pre>flowchart complains: ${e}</pre>`
+            }
+          })
         })
       }
     }
@@ -90,6 +103,7 @@ export default {
       .use(MarkdownItSourceMap)
       .use(MarkdownItMermaid)
       .use(MarkdownItEcharts)
+      .use(MarkdownItFlowchart)
     return {
       md: md
     }

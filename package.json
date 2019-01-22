@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "The vue lib for markdown-it",
   "homepage": "https://github.com/ravenq/markdown-it-vue",
   "author": {
@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "echarts": "^4.1.0",
+    "flowchart.js": "^1.11.3",
     "github-markdown-css": "^2.10.0",
     "markdown-it": "^8.4.2",
     "markdown-it-abbr": "^1.0.4",
