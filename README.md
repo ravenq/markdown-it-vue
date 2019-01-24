@@ -1,5 +1,8 @@
 # markdown-it-vue
-The vue lib for markdown-it.
+
+[![Build Status](https://travis-ci.org/ravenq/markdown-it-vue.svg?branch=master)](https://travis-ci.org/ravenq/markdown-it-vue)
+
+> The vue lib for markdown-it.
 
 ## Demo online
 
