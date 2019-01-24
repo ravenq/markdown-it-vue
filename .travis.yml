@@ -3,3 +3,11 @@ node_js:
   - "10"
 script:
   - yarn build
+
+deploy:
+  provider: npm
+  email: flw_dream@126.com@126.com
+  api_key: "$NPM_TOKEN"
+  skip_cleanup: true
+  on:
+    tags: true
