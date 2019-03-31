@@ -84,7 +84,7 @@ export default {
       .use(MarkdownItMark)
       .use(MarkdownItKatex, {throwOnError: false, errorColor: '#cc0000'})
       .use(MarkdownItTasklists, {enabled: this.taskLists})
-      .use(MarkdownItIcons)
+      .use(MarkdownItIcons, 'font-awesome')
       .use(MarkdownItHighlight)
       .use(MarkdownItLatex)
       .use(MarkdownItContainer, 'success')

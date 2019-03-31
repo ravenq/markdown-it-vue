@@ -23,8 +23,8 @@
     "serve": "vue-cli-service serve ./example/main.js",
     "build": "npm run build:lib && npm run build:example",
     "lint": "vue-cli-service lint",
-    "build:example": "vue-cli-service build --dest example/dist ./example/main.js",
-    "build:lib": "vue-cli-service build --target lib ./src/index.js"
+    "build:example": "vue-cli-service build --max_old_space_size=8192 --dest example/dist ./example/main.js",
+    "build:lib": "vue-cli-service build --max_old_space_size=8192 --target lib ./src/index.js"
   },
   "main": "dist/markdown-it-vue.umd.min.js",
   "dependencies": {
