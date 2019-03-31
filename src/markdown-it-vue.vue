@@ -43,7 +43,7 @@ export default {
     content: {
       immediate: true,
       handler (val) {
-        this.$nextTick(_ => {
+        this.$nextTick(() => {
           this.$refs['markdown-it-vue-container'].innerHTML = this.md.render(val)
           // render echarts
           document.querySelectorAll('.md-echarts').forEach(element => {

@@ -7,7 +7,7 @@
 
 <script>
 import MarkdownText from './example'
-import MarkdownItVue from '../../../src'
+import MarkdownItVue from '../../src'
 export default {
   components: {
     MarkdownItVue

@@ -6,7 +6,7 @@ script:
 
 deploy:
   provider: npm
-  email: flw_dream@126.com@126.com
+  email: flw_dream@126.com
   api_key: "$NPM_TOKEN"
   skip_cleanup: true
   on:
