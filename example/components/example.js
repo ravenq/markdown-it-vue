@@ -7,7 +7,6 @@ export default `
 
 Note: Only \`h2\` and \`h3\` are shown in toc.
 
-
 ## alter
 
 Markup is similar to fenced code blocks. Valid container types are \`success\`, \`info\`, \`warning\` and \`error\`.

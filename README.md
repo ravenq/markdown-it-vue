@@ -57,6 +57,7 @@ npm install markdown-it-vue
 
 <script>
 import MarkdownItVue from 'markdown-it-vue'
+import 'markdown-it-vue/dist/markdown-it-vue.css'
 export default {
   components: {
     MarkdownItVue
