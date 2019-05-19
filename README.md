@@ -10,7 +10,7 @@
 
 ## Install
 
-```
+```sh
 npm install markdown-it-vue
 ```
 
@@ -22,9 +22,10 @@ npm install markdown-it-vue
 * emoji
 * [mermaid charts](http://knsv.github.io/mermaid/)
 * [Echarts](http://echarts.baidu.com)
+* Flowcharts.js
 * Subscript/Superscript
 * [AsciiMath](http://asciimath.org/)
-* Custom Container
+* info | error | warning message tip
 
 ## Plugin list
 
