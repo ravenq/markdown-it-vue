@@ -20,6 +20,7 @@ import MarkdownItLatex from 'markdown-it-latex'
 import MarkdownItContainer from 'markdown-it-container'
 import MarkdownItGithubToc from 'markdown-it-github-toc'
 import MarkdownItSourceMap from 'markdown-it-source-map'
+import MarkdownItLinkAttributes from './markdown-it-link-attributes'
 import MarkdownItEcharts from './markdown-it-plugin-echarts'
 import MarkdownItMermaid from './markdown-it-plugin-mermaid'
 import MarkdownItFlowchart from './markdown-it-plugin-flowchart'
@@ -32,11 +33,45 @@ import echarts from 'echarts'
 import mermaid from 'mermaid'
 import flowchart from 'flowchart.js'
 
+const DEFAULT_OPTIONS_LINK_ATTRIBUTES = {
+  attrs: {
+    target: '_blank',
+    rel: 'noopener'
+  }
+}
+const DEFAULT_OPTIONS_KATEX = { throwOnError: false, errorColor: '#cc0000' }
+const DEFAULT_OPTIONS_TASKLISTS = null
+const DEFAULT_OPTIONS_ICONS = 'font-awesome'
+const DEFAULT_OPTIONS_GITHUBTOC = {
+  tocFirstLevel: 2,
+  tocLastLevel: 3,
+  tocClassName: 'toc',
+  anchorLinkSymbol: '',
+  anchorLinkSpace: false,
+  anchorClassName: 'anchor',
+  anchorLinkSymbolClassName: 'octicon octicon-link'
+}
+
 export default {
   name: 'markdown-it-vue',
   props: {
     content: {
       type: String
+    },
+    options: {
+      type: Object,
+      default() {
+        return {
+          markdownIt: {
+            linkify: true
+          },
+          linkAttributes: DEFAULT_OPTIONS_LINK_ATTRIBUTES,
+          katex: DEFAULT_OPTIONS_KATEX,
+          tasklists: DEFAULT_OPTIONS_TASKLISTS,
+          icons: DEFAULT_OPTIONS_ICONS,
+          githubToc: DEFAULT_OPTIONS_GITHUBTOC
+        }
+      }
     }
   },
   watch: {
@@ -75,7 +110,14 @@ export default {
     }
   },
   data() {
-    let md = new MarkdownIt()
+    const optMarkdownIt = this.options.markdownIt
+    const linkAttributes = this.options.linkAttributes = DEFAULT_OPTIONS_LINK_ATTRIBUTES
+    const optKatex = this.options.katex || DEFAULT_OPTIONS_KATEX
+    const optTasklists = this.options.tasklists || DEFAULT_OPTIONS_TASKLISTS
+    const optIcons = this.options.icons || DEFAULT_OPTIONS_ICONS
+    const optGithubToc = this.options.githubToc || DEFAULT_OPTIONS_GITHUBTOC
+
+    let md = new MarkdownIt(optMarkdownIt)
       .use(MarkdownItEmoji)
       .use(MarkdownItSubscript)
       .use(MarkdownItSuperscript)
@@ -84,11 +126,17 @@ export default {
       .use(MarkdownItAbbreviation)
       .use(MarkdownItInsert)
       .use(MarkdownItMark)
-      .use(MarkdownItKatex, { throwOnError: false, errorColor: '#cc0000' })
-      .use(MarkdownItTasklists, { enabled: this.taskLists })
-      .use(MarkdownItIcons, 'font-awesome')
       .use(MarkdownItHighlight)
       .use(MarkdownItLatex)
+      .use(MarkdownItSourceMap)
+      .use(MarkdownItMermaid)
+      .use(MarkdownItEcharts)
+      .use(MarkdownItFlowchart)
+      .use(MarkdownItLinkAttributes, linkAttributes)
+      .use(MarkdownItKatex, optKatex)
+      .use(MarkdownItTasklists, optTasklists)
+      .use(MarkdownItIcons, optIcons)
+      .use(MarkdownItGithubToc, optGithubToc)
       .use(MarkdownItContainer, 'warning', {
         validate: function(params) {
           return params.trim() === 'warning'
@@ -141,21 +189,13 @@ export default {
           }
         }
       })
-      .use(MarkdownItGithubToc, {
-        tocFirstLevel: 2,
-        tocLastLevel: 3,
-        tocClassName: 'toc',
-        anchorLinkSymbol: '',
-        anchorLinkSpace: false,
-        anchorClassName: 'anchor',
-        anchorLinkSymbolClassName: 'octicon octicon-link'
-      })
-      .use(MarkdownItSourceMap)
-      .use(MarkdownItMermaid)
-      .use(MarkdownItEcharts)
-      .use(MarkdownItFlowchart)
     return {
       md: md
+    }
+  },
+  methods: {
+    use(plugin, options) {
+      this.md.use(plugin, options)
     }
   }
 }

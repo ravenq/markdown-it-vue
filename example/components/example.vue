@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <textarea class="md-text" rows="10" v-model="content"/>
-    <markdown-it-vue class="md-body" :content="content"/>
+    <markdown-it-vue class="md-body" :content="content" :options="options" />
   </div>
 </template>
 
@@ -14,7 +14,16 @@ export default {
   },
   data () {
     return {
-      content: MarkdownText
+      content: MarkdownText,
+      options: {
+        markdownIt: {
+          linkify: true
+        },
+        linkAttributes: {
+          target: '_blank',
+          rel: 'noopener'
+        }
+      }
     }
   }
 }

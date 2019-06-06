@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": false,
   "description": "The vue lib for markdown-it",
   "author": {
@@ -20,7 +20,7 @@
     "src"
   ],
   "scripts": {
-    "serve": "vue-cli-service serve ./example/main.js",
+    "dev": "vue-cli-service serve ./example/main.js",
     "build": "npm run build:lib && npm run build:example",
     "lint": "vue-cli-service lint",
     "build:example": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --dest example/dist ./example/main.js",
@@ -29,7 +29,7 @@
   "main": "dist/markdown-it-vue.umd.min.js",
   "dependencies": {
     "echarts": "^4.1.0",
-    "flowchart.js": "^1.11.3",
+    "flowchart.js": "^1.12.0",
     "github-markdown-css": "^3.0.1",
     "markdown-it": "^8.4.2",
     "markdown-it-abbr": "^1.0.4",
@@ -53,13 +53,13 @@
     "vue": "^2.6.6"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.3",
-    "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-service": "^3.5.3",
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-cli-plugin-component-lib": "^0.1.3",
+    "vue-cli-plugin-component-lib": "^0.1.6",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {
