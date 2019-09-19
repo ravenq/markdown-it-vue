@@ -111,7 +111,7 @@ export default {
   },
   data() {
     const optMarkdownIt = this.options.markdownIt
-    const linkAttributes = this.options.linkAttributes = DEFAULT_OPTIONS_LINK_ATTRIBUTES
+    const linkAttributes = this.options.linkAttributes || DEFAULT_OPTIONS_LINK_ATTRIBUTES
     const optKatex = this.options.katex || DEFAULT_OPTIONS_KATEX
     const optTasklists = this.options.tasklists || DEFAULT_OPTIONS_TASKLISTS
     const optIcons = this.options.icons || DEFAULT_OPTIONS_ICONS

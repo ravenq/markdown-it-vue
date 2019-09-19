@@ -20,8 +20,10 @@ export default {
           linkify: true
         },
         linkAttributes: {
-          target: '_blank',
-          rel: 'noopener'
+          attrs: {
+            target: '_self',
+            rel: 'noopener'
+          }
         }
       }
     }

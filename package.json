@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": false,
   "description": "The vue lib for markdown-it",
   "author": {
@@ -28,10 +28,10 @@
   },
   "main": "dist/markdown-it-vue.umd.min.js",
   "dependencies": {
-    "echarts": "^4.1.0",
+    "echarts": "^4.3.0",
     "flowchart.js": "^1.12.0",
     "github-markdown-css": "^3.0.1",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^10.0.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-container": "^2.0.0",
     "markdown-it-deflist": "^2.0.3",
@@ -40,16 +40,16 @@
     "markdown-it-github-toc": "^3.2.4",
     "markdown-it-highlight": "^0.2.0",
     "markdown-it-icons": "^0.4.1",
-    "markdown-it-ins": "^2.0.0",
+    "markdown-it-ins": "^3.0.0",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-latex": "^0.2.0",
-    "markdown-it-mark": "^2.0.0",
+    "markdown-it-mark": "^3.0.0",
     "markdown-it-source-map": "^0.1.1",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-and-anchor": "^4.1.2",
-    "mermaid": "^8.0.0-rc.8",
+    "mermaid": "^8.3.0",
     "vue": "^2.6.6"
   },
   "devDependencies": {
@@ -57,7 +57,7 @@
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
+    "eslint": "^6.4.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-cli-plugin-component-lib": "^0.1.6",
     "vue-template-compiler": "^2.5.21"

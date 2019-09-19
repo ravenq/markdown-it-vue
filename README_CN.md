@@ -72,8 +72,10 @@ options: {
     linkify: true
   },
   linkAttributes: {
-    target: '_blank',
-    rel: 'noopener'
+    attrs: {
+      target: '_blank',
+      rel: 'noopener'
+    }
   }
 }
 ```
