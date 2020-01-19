@@ -195,6 +195,9 @@ export default {
   methods: {
     use(plugin, options) {
       this.md.use(plugin, options)
+    },
+    get() {
+      return this.md
     }
   }
 }
