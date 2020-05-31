@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.0.11",
+  "version": "1.1.0",
   "private": false,
   "description": "The vue lib for markdown-it",
   "author": {
@@ -21,17 +21,18 @@
   ],
   "scripts": {
     "dev": "vue-cli-service serve ./example/main.js",
-    "build": "npm run build:lib && npm run build:example",
+    "build": "npm run build:lib && npm run build:light && npm run build:example",
     "lint": "vue-cli-service lint",
     "build:example": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --dest example/dist ./example/main.js",
-    "build:lib": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib ./src/index.js"
+    "build:lib": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib ./src/index.js",
+    "build:light": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name markdown-it-vue-light ./src/index-light.js"
   },
   "main": "dist/markdown-it-vue.umd.min.js",
   "dependencies": {
     "echarts": "^4.5.0",
     "flowchart.js": "^1.13.0",
     "github-markdown-css": "^3.0.1",
-    "highlight.js": "^9.16.2",
+    "highlight.js": "^10.0.3",
     "markdown-it": "^10.0.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-container": "^2.0.0",
@@ -39,7 +40,6 @@
     "markdown-it-emoji": "^1.4.0",
     "markdown-it-footnote": "^3.0.1",
     "markdown-it-github-toc": "^3.2.4",
-    "markdown-it-icons": "^0.4.1",
     "markdown-it-ins": "^3.0.0",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-latex": "^0.2.0",
@@ -60,6 +60,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^5.0.0",
     "vue-cli-plugin-component-lib": "^0.1.6",
+    "vue-cli-plugin-webpack-bundle-analyzer": "^2.0.0",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {

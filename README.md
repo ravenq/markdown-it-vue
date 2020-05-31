@@ -21,7 +21,7 @@ npm install markdown-it-vue
 - GFM style
 - emoji
 - [mermaid charts](http://knsv.github.io/mermaid/)
-- [Echarts](http://echarts.baidu.com)
+- [Echarts](http://echarts.baidu.com) **simple only**
 - Flowcharts.js
 - Subscript/Superscript
 - [AsciiMath](http://asciimath.org/)
@@ -40,7 +40,6 @@ npm install markdown-it-vue
 - markdown-it-mark
 - markdown-it-katex
 - markdown-it-task-lists
-- markdown-it-icons
 - markdown-it-highlight
 - markdown-it-latex
 - markdown-it-container
@@ -50,6 +49,9 @@ npm install markdown-it-vue
 
 internal plugin list:
 
+- markdown-it-font-awsome
+- markdown-it-link-attributes
+- markdown-it-highlight
 - markdown-it-plugin-echarts
 - markdown-it-plugin-mermaid
 - markdown-it-plugin-flowchart
@@ -113,6 +115,67 @@ it can add your plugin to markdown-it-vue by the `use` method.
 this.$refs.myMarkdownItVue.use(MyMarkdownItPlugin)
 ```
 
+## support hilight lang
+
+PR for you lang wich you want.
+
+- html
+- json
+- css
+- shell
+- bash
+- C
+- Java
+- Python
+- C++
+- C#
+- PHP
+- SQL
+- R
+- Swift
+- Go
+- MATLAB
+- Ruby
+- Perl
+- Objective-C	
+- Rust
+- Dart
+- Delphi
+- D
+- Kotlin
+- Scala
+- SAS
+- Lisp
+- Lua
+- Ada
+- Fortran
+- PowerShell
+- VBScript
+- VBscript-html
+- Groovy
+- Julia
+- Julia-repl
+- LabVIEW
+- Haskell
+- ActionScript
+- Scheme
+- TypeScript
+- F#
+- Prolog
+- Erlang
+
+## about echarts
+
+use echarts.simple to reduce the bundle size.
+
+## markdown-it-vue-light
+
+markdown-it-vue-light remove the mermaid chart to reduce the bundle size.
+
+https://github.com/ravenq/markdown-it-vue/issues/24
+
+for a small bundle size, it better to import the markdown-it-vue-light.
+
 ## Usage
 
 ```vue
@@ -128,6 +191,31 @@ import 'markdown-it-vue/dist/markdown-it-vue.css'
 export default {
   components: {
     MarkdownItVue
+  },
+  data() {
+    return {
+      content: '# your markdown content'
+    }
+  }
+}
+</script>
+```
+
+the light model.
+
+```vue
+<template>
+  <div>
+    <markdown-it-vue-light class="md-body" :content="content" />
+  </div>
+</template>
+
+<script>
+import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js'
+import 'markdown-it-vue/dist/markdown-it-vue-light.css'
+export default {
+  components: {
+    MarkdownItVueLight
   },
   data() {
     return {

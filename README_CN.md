@@ -54,6 +54,9 @@ npm install markdown-it-vue
 
 内置插件：
 
+* markdown-it-font-awsome
+* markdown-it-link-attributes
+* markdown-it-highlight
 * markdown-it-plugin-echarts
 * markdown-it-plugin-mermaid
 * markdown-it-plugin-flowchart
@@ -111,13 +114,76 @@ options: {
 
 个插件详细说明见个插件官方文档。
 
-## More plugins
+## 自定义插件
 
 it can add your plugin to markdown-it-vue by the `use` method.
 
 ```js
 this.$refs.myMarkdownItVue.use(MyMarkdownItPlugin)
 ```
+
+## 支持高亮的语言
+
+语言高亮使用 hilight.js 打包过大，因此只引用了常用的语言。
+
+如果这里没有你需要的语言，欢迎提 PR。
+
+- html
+- json
+- css
+- shell
+- bash
+- C
+- Java
+- Python
+- C++
+- C#
+- PHP
+- SQL
+- R
+- Swift
+- Go
+- MATLAB
+- Ruby
+- Perl
+- Objective-C	
+- Rust
+- Dart
+- Delphi
+- D
+- Kotlin
+- Scala
+- SAS
+- Lisp
+- Lua
+- Ada
+- Fortran
+- PowerShell
+- VBScript
+- VBscript-html
+- Groovy
+- Julia
+- Julia-repl
+- LabVIEW
+- Haskell
+- ActionScript
+- Scheme
+- TypeScript
+- F#
+- Prolog
+- Erlang
+
+## 关于 echarts
+
+为了减少包的大小，只引用 echarts.simple。
+
+## 精简版 markdown-it-vue-light
+
+https://github.com/ravenq/markdown-it-vue/issues/24
+
+为了进一步缩小打包的大小，移除了 mermaid chart。这包直接引用了整个 lodash, 他本身也很大。
+
+如果平时用不到的话，就用精简版吧。
 
 ## 使用示例
 
@@ -136,6 +202,31 @@ export default {
     MarkdownItVue
   },
   data () {
+    return {
+      content: '# your markdown content'
+    }
+  }
+}
+</script>
+```
+
+使用精简版
+
+```vue
+<template>
+  <div>
+    <markdown-it-vue-light class="md-body" :content="content" />
+  </div>
+</template>
+
+<script>
+import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js'
+import 'markdown-it-vue/dist/markdown-it-vue-light.css'
+export default {
+  components: {
+    MarkdownItVueLight
+  },
+  data() {
     return {
       content: '# your markdown content'
     }

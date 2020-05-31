@@ -20,7 +20,6 @@ import MarkdownItGithubToc from 'markdown-it-github-toc'
 import MarkdownItSourceMap from 'markdown-it-source-map'
 import MarkdownItLinkAttributes from './markdown-it-link-attributes'
 import MarkdownItEcharts from './markdown-it-plugin-echarts'
-import MarkdownItMermaid from './markdown-it-plugin-mermaid'
 import MarkdownItFlowchart from './markdown-it-plugin-flowchart'
 import MarkdownItHighlight from './markdown-it-highlight'
 import MarkdownItFontAwsome from './markdown-it-font-awsome'
@@ -29,7 +28,6 @@ import 'markdown-it-latex/dist/index.css'
 import 'markdown-it-icons/dist/index.css'
 
 import echarts from 'echarts/dist/echarts.simple.min'
-import mermaid from 'mermaid'
 import flowchart from 'flowchart.js'
 
 const DEFAULT_OPTIONS_LINK_ATTRIBUTES = {
@@ -51,7 +49,7 @@ const DEFAULT_OPTIONS_GITHUBTOC = {
 }
 
 export default {
-  name: 'markdown-it-vue',
+  name: 'markdown-it-vue-light',
   props: {
     content: {
       type: String
@@ -89,8 +87,6 @@ export default {
               element.outerHTML = `<pre>echarts complains: ${e}</pre>`
             }
           })
-          // render mermaid
-          mermaid.init(undefined, document.querySelectorAll('.mermaid'))
           // render flowchart
           document.querySelectorAll('.md-flowchart').forEach(element => {
             try {
@@ -125,7 +121,6 @@ export default {
       .use(MarkdownItHighlight)
       .use(MarkdownItLatex)
       .use(MarkdownItSourceMap)
-      .use(MarkdownItMermaid)
       .use(MarkdownItEcharts)
       .use(MarkdownItFlowchart)
       .use(MarkdownItLinkAttributes, linkAttributes)

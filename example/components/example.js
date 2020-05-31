@@ -150,6 +150,34 @@ The width and height is the size for chart container.
 
 ## code
 
+### c
+\`\`\`c
+#include <stdio.h>
+int main(int argc char* argv[]) {
+  printf("Hello, World!");
+  return 0;
+}
+\`\`\`
+
+### json
+
+\`\`\`json
+{
+  "name": "markdown-it-vue"
+}
+\`\`\`
+
+### javascript
+\`\`\`json
+import MarkdownItVue from 'markdown-it-vue'
+export default {
+  components: {
+    MarkdownItVue
+  }
+}
+\`\`\`
+
+### bash
 \`\`\`bash
 npm install markdown-it-vue
 \`\`\`
@@ -187,4 +215,4 @@ para(path2, right)->op2->e
 st@>op1({"stroke":"Red"})@>cond({"stroke":"Red","stroke-width":6,"arrow-end":"classic-wide-long"})@>c2({"stroke":"Red"})@>op2({"stroke":"Red"})@>e({"stroke":"Red"})
 \`\`\`
 
-`;
+`
