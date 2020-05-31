@@ -7,7 +7,6 @@ import Shell from 'highlight.js/lib/languages/shell'
 import Bash from 'highlight.js/lib/languages/bash'
 import C from 'highlight.js/lib/languages/c'
 import Clike from 'highlight.js/lib/languages/c-like'
-import C1 from 'highlight.js/lib/languages/1c'
 import Java from 'highlight.js/lib/languages/java'
 import Python from 'highlight.js/lib/languages/python'
 import Cpp from 'highlight.js/lib/languages/cpp'
@@ -54,7 +53,6 @@ hljs.registerLanguage('htmlbars', Htmlbars)
 hljs.registerLanguage('css', Css)
 hljs.registerLanguage('shell', Shell)
 hljs.registerLanguage('bash', Bash)
-hljs.registerLanguage('1c', C1)
 hljs.registerLanguage('c-like', Clike)
 hljs.registerLanguage('c', C)
 hljs.registerLanguage('cpp', Cpp)

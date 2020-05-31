@@ -1,7 +1,8 @@
 import './font-awsome/css/font-awesome.min.css'
 
 import { rendererRule, coreRuler } from 'markdown-it-regex'
-import faIconChars from 'font-awesome-icon-chars'
+import { solid, regular, brands } from 'font-awesome-icon-chars'
+const faIconChars = [...solid, ...regular, ...brands]
 
 const iconsPlugin = (md) => {
   let options = null

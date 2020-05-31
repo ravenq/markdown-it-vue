@@ -25,7 +25,6 @@ import MarkdownItHighlight from './markdown-it-highlight'
 import MarkdownItFontAwsome from './markdown-it-font-awsome'
 import 'github-markdown-css'
 import 'markdown-it-latex/dist/index.css'
-import 'markdown-it-icons/dist/index.css'
 
 import echarts from 'echarts/dist/echarts.simple.min'
 import flowchart from 'flowchart.js'
