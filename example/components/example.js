@@ -102,7 +102,7 @@ You can also use inline math: \`$29^{th}$\`
 
 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/)
 
-## Fontawesome: :fa-cab: :fa-flag: :fa-bicycle: :fa-leaf: :fa-heart:
+## Fontawesome: :fa-car: :fa-flag: :fa-bicycle: :fa-leaf: :fa-heart:
 
 [All the Font Awesome icons](http://fontawesome.io/icons/)
 

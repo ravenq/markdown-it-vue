@@ -8,8 +8,9 @@ const iconsPlugin = (md) => {
   let options = null
   let faIcons = []
   faIconChars.forEach(char => {
-    faIcons = faIcons.concat(char.id).concat(char.aliases || [])
+    faIcons = faIcons.concat(char.name)
   })
+  console.log(faIconChars)
   const faRegex = new RegExp(`(:fa-(?:${faIcons.join('|')}):)`)
   options = {
     name: 'font-awesome',

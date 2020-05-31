@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "description": "The vue lib for markdown-it",
   "author": {
@@ -34,7 +34,7 @@
     "font-awesome-icon-chars": "^2.5.0",
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.0.3",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^11.0.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-container": "^2.0.0",
     "markdown-it-deflist": "^2.0.3",
@@ -97,5 +97,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ravenq/markdown-it-vue.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
