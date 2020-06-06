@@ -97,8 +97,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ravenq/markdown-it-vue.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
