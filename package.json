@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": false,
   "description": "The vue lib for markdown-it",
   "author": {
@@ -25,7 +25,7 @@
     "lint": "vue-cli-service lint",
     "build:example": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --dest example/dist ./example/main.js",
     "build:lib": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib ./src/index.js",
-    "build:light": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name markdown-it-vue-light ./src/index-light.js"
+    "build:light": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name markdown-it-vue-light --no-clean ./src/index-light.js"
   },
   "main": "dist/markdown-it-vue.umd.min.js",
   "dependencies": {
