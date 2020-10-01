@@ -46,8 +46,10 @@ import Prolog from 'highlight.js/lib/languages/prolog'
 import Erlang from 'highlight.js/lib/languages/erlang'
 import ErlangRepl from 'highlight.js/lib/languages/erlang-repl'
 import Json from 'highlight.js/lib/languages/json'
+import Ini from 'highlight.js/lib/languages/ini'
 
 hljs.registerLanguage('json', Json)
+hljs.registerLanguage('ini', Ini)
 hljs.registerLanguage('handlebars', Handlebars)
 hljs.registerLanguage('htmlbars', Htmlbars)
 hljs.registerLanguage('css', Css)
