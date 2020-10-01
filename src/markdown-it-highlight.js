@@ -101,11 +101,12 @@ const highlightPlugin = md => {
     const token = tokens[idx]
     const code = token.content.trim()
     const lang = token.info
+    const langObj = hljs.getLanguage(lang)
     let cnt
-    if (lang) {
-      cnt = hljs.highlightAuto(code).value
-    } else {
+    if (langObj) {
       cnt = hljs.highlight(lang, code).value
+    } else {
+      cnt = hljs.highlightAuto(code).value
     }
     return `<pre><code class="hljs">${cnt}</code></pre>`
   }
