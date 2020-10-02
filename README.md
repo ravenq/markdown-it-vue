@@ -103,6 +103,9 @@ amd default plugins options:
     anchorLinkSpace: false,
     anchorClassName: 'anchor',
     anchorLinkSymbolClassName: 'octicon octicon-link'
+  },
+  mermaid: {
+    theme: 'default'
   }
 }
 ```
@@ -137,7 +140,7 @@ PR for you lang wich you want.
 - MATLAB
 - Ruby
 - Perl
-- Objective-C	
+- Objective-C
 - Rust
 - Dart
 - Delphi
