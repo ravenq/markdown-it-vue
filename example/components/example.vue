@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <textarea class="md-text" rows="10" v-model="content"/>
-    <markdown-it-vue class="md-body" :content="content" :options="options" />
+    <markdown-it-vue 
+      class="md-body" 
+      :content="content" 
+      :options="options" 
+      @render-complete=hdlCmplete 
+    />
   </div>
 </template>
 
@@ -26,6 +31,11 @@ export default {
           }
         }
       }
+    }
+  },
+  methods: {
+    hdlCmplete() {
+      console.log('reder complete')
     }
   }
 }

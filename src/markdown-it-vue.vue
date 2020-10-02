@@ -105,6 +105,9 @@ export default {
               element.outerHTML = `<pre>flowchart complains: ${e}</pre>`
             }
           })
+
+          // emit event
+          this.$emit('render-complete')
         })
       }
     }
