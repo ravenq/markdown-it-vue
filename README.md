@@ -175,7 +175,7 @@ use echarts.simple to reduce the bundle size.
 
 markdown-it-vue-light remove the mermaid chart to reduce the bundle size.
 
-https://github.com/ravenq/markdown-it-vue/issues/24
+<https://github.com/ravenq/markdown-it-vue/issues/24>
 
 for a small bundle size, it better to import the markdown-it-vue-light.
 

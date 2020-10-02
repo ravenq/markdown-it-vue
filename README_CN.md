@@ -182,7 +182,7 @@ this.$refs.myMarkdownItVue.use(MyMarkdownItPlugin)
 
 ## 精简版 markdown-it-vue-light
 
-https://github.com/ravenq/markdown-it-vue/issues/24
+<https://github.com/ravenq/markdown-it-vue/issues/24>
 
 为了进一步缩小打包的大小，移除了 mermaid chart。这包直接引用了整个 lodash, 他本身也很大。
 
