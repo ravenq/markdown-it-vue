@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ravenq/markdown-it-vue.svg?branch=master)](https://travis-ci.org/ravenq/markdown-it-vue)
 
-> Markdonw Vue 组件库.
+> Markdown Vue 组件库.
 
 markdown-it-vue 是一个丰富的 markdown Vue 组件，markdown-it-vue 使用 markdown-it 作为 Markdown 数据解析引擎，整合多种 markdown-it 插件，并内置了一些自己的功能性插件，支持 GFM TOC、GFM style、emoji 等通用特性，还支持 mermaid charts、Echarts、flowchart.js 等多种图表，支持 AsciiMath、Latex 等数学公式渲染，支持 errro | warning | info 个性化提示。
 
