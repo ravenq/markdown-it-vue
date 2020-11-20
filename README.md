@@ -16,6 +16,7 @@ npm install markdown-it-vue
 
 ## Supports
 
+- Image size and Viewer
 - Official markdown syntax.
 - GFM TOC
 - GFM style
@@ -49,6 +50,7 @@ npm install markdown-it-vue
 
 internal plugin list:
 
+- markdown-it-image
 - markdown-it-font-awsome
 - markdown-it-link-attributes
 - markdown-it-highlight
@@ -106,6 +108,10 @@ amd default plugins options:
   },
   mermaid: {
     theme: 'default'
+  },
+  image: {
+    hAlign: 'left',
+    viewer: true
   }
 }
 ```
@@ -166,6 +172,14 @@ PR for you lang wich you want.
 - F#
 - Prolog
 - Erlang
+
+## image size
+
+```md
+![image size](https://http://www.aqcoder.com/ravenq-qr.png =50x50)
+![image size](https://http://www.aqcoder.com/ravenq-qr.png =x50)
+![image size](https://http://www.aqcoder.com/ravenq-qr.png =50x)
+```
 
 ## about echarts
 

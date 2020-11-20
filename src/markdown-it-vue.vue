@@ -1,5 +1,17 @@
 <template>
-  <div class="markdown-body" ref="markdown-it-vue-container"></div>
+  <div>
+    <div
+      class="markdown-body"
+      ref="markdown-it-vue-container"
+      @click="hdlClick"
+    />
+    <image-viewer
+      v-if="showViewer"
+      :url-list="urlList"
+      :index.sync="index"
+      :on-close="closeViewer"
+    />
+  </div>
 </template>
 
 <script>
@@ -24,12 +36,14 @@ import MarkdownItMermaid from './markdown-it-plugin-mermaid'
 import MarkdownItFlowchart from './markdown-it-plugin-flowchart'
 import MarkdownItHighlight from './markdown-it-highlight'
 import MarkdownItFontAwsome from './markdown-it-font-awsome'
+import MarkdownItImage from './markdown-it-image'
 import 'github-markdown-css'
 import 'markdown-it-latex/dist/index.css'
 
 import echarts from 'echarts/dist/echarts.simple.min'
 import mermaid from 'mermaid'
 import flowchart from 'flowchart.js'
+import ImageViewer from './markdown-it-image/image-viewer.vue'
 
 const DEFAULT_OPTIONS_LINK_ATTRIBUTES = {
   attrs: {
@@ -49,10 +63,15 @@ const DEFAULT_OPTIONS_GITHUBTOC = {
   anchorLinkSymbolClassName: 'octicon octicon-link'
 }
 const DEFAULT_OPTIONS_MERMAID = {
-   theme: 'default'
+  theme: 'default'
+}
+const DEFAULT_OPTIONS_IMAGE = {
+  hAlign: 'left',
+  viewer: true
 }
 
 export default {
+  components: { ImageViewer },
   name: 'markdown-it-vue',
   props: {
     content: {
@@ -78,6 +97,7 @@ export default {
     content: {
       immediate: true,
       handler(val) {
+        this.urlSet.clear()
         this.$nextTick(() => {
           this.$refs['markdown-it-vue-container'].innerHTML = this.md.render(
             val
@@ -106,6 +126,11 @@ export default {
             }
           })
 
+          let list = []
+          for (const i of this.urlSet) {
+            list.push(i)
+          }
+          this.urlList = list
           // emit event
           this.$emit('render-complete')
         })
@@ -119,6 +144,8 @@ export default {
     const optTasklists = this.options.tasklists || DEFAULT_OPTIONS_TASKLISTS
     const optGithubToc = this.options.githubToc || DEFAULT_OPTIONS_GITHUBTOC
     const optMermaid = this.options.mermaid || DEFAULT_OPTIONS_MERMAID
+    const optImage = this.options.image || DEFAULT_OPTIONS_IMAGE
+    optImage.urlSet = new Set()
 
     let md = new MarkdownIt(optMarkdownIt)
       .use(MarkdownItEmoji)
@@ -140,6 +167,7 @@ export default {
       .use(MarkdownItTasklists, optTasklists)
       .use(MarkdownItFontAwsome)
       .use(MarkdownItGithubToc, optGithubToc)
+      .use(MarkdownItImage, optImage)
       .use(MarkdownItContainer, 'warning', {
         validate: function(params) {
           return params.trim() === 'warning'
@@ -193,7 +221,12 @@ export default {
         }
       })
     return {
-      md: md
+      md: md,
+      urlSet: optImage.urlSet,
+      viewer: optImage.viewer,
+      showViewer: false,
+      index: 0,
+      urlList: []
     }
   },
   methods: {
@@ -202,6 +235,15 @@ export default {
     },
     get() {
       return this.md
+    },
+    hdlClick(e) {
+      if (this.viewer && e.target.tagName == 'IMG') {
+        this.index = this.urlList.indexOf(e.target.src) || 0
+        this.showViewer = true
+      }
+    },
+    closeViewer() {
+      this.showViewer = false
     }
   }
 }

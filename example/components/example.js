@@ -1,6 +1,11 @@
 export default `
 # markdown-it-vue
 
+## Image size and Viewer
+
+![gvf](http://www.aqcoder.com/gvf-project.png =x50)
+![ravenq](http://www.aqcoder.com/ravenq-qr.png =50x50)
+
 ## GitHub Table of Contents
 
 [toc]

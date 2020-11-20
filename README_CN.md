@@ -20,6 +20,7 @@ npm install markdown-it-vue
 
 ## 特性
 
+- 图片大小控制及图片预览
 - Official markdown syntax.
 - GFM TOC
 - GFM style
@@ -54,6 +55,7 @@ npm install markdown-it-vue
 
 内置插件：
 
+- markdown-it-image
 - markdown-it-font-awsome
 - markdown-it-link-attributes
 - markdown-it-highlight
@@ -111,6 +113,10 @@ options: {
   },
   mermaid: {
     theme: 'default'
+  },
+  image: {
+    hAlign: 'left',
+    viewer: true
   }
 }
 ```
@@ -175,6 +181,14 @@ this.$refs.myMarkdownItVue.use(MyMarkdownItPlugin)
 - F#
 - Prolog
 - Erlang
+
+## 图片大小控制语法
+
+```md
+![image size](https://http://www.aqcoder.com/ravenq-qr.png =50x50)
+![image size](https://http://www.aqcoder.com/ravenq-qr.png =x50)
+![image size](https://http://www.aqcoder.com/ravenq-qr.png =50x)
+```
 
 ## 关于 echarts
 
