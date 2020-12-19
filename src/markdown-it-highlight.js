@@ -99,7 +99,7 @@ hljs.registerLanguage('erlang-repl', ErlangRepl)
 const highlightPlugin = md => {
   md.renderer.rules.fence = (tokens, idx) => {
     const token = tokens[idx]
-    const code = token.content.trim()
+    const code = token.content
     const lang = token.info
     const langObj = hljs.getLanguage(lang)
     let cnt
@@ -108,7 +108,8 @@ const highlightPlugin = md => {
     } else {
       cnt = hljs.highlightAuto(code).value
     }
-    return `<pre><code class="hljs">${cnt}</code></pre>`
+    
+    return `<pre class="hljs"><code>${cnt}</code></pre>`
   }
 }
 
