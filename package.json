@@ -17,8 +17,10 @@
   "files": [
     "dist",
     "doc",
-    "src"
+    "src",
+    "types"
   ],
+  "typings": "types/index.d.ts",
   "scripts": {
     "dev": "vue-cli-service serve ./example/main.js",
     "build": "npm run build:lib && npm run build:light && npm run build:example",
