@@ -1,3 +1,4 @@
+import Vue from 'vue'
 /**
  * The options of MarkdownIt.
  * https://markdown-it.github.io/markdown-it/#MarkdownIt.new
@@ -230,8 +231,13 @@ export interface MarkdownItVueOptions {
   image: ImageOptions
 }
 
-export declare class MarkdownItVue {
+export class MarkdownItVue extends Vue {
+  /** Install component into Vue */
+  static install(vue: typeof Vue): void
   /** markdown plain text */
   content: string
+  /** options for MarkdownItVue */
   options: MarkdownItVueOptions
 }
+
+export class MarkdownItVueLight extends MarkdownItVue { }
