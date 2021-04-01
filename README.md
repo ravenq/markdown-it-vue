@@ -13,6 +13,11 @@
 ```sh
 npm install markdown-it-vue
 ```
+## Running Demo
+```bash
+yarn install && yarn dev
+```
+open http://localhost:8080/
 
 ## Supports
 
