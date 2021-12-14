@@ -20,6 +20,7 @@ import MarkdownItGithubToc from 'markdown-it-github-toc'
 import MarkdownItSourceMap from 'markdown-it-source-map'
 import MarkdownItLinkAttributes from './markdown-it-link-attributes'
 import MarkdownItFlowchart from './markdown-it-plugin-flowchart'
+import MarkdownItHighlight from './markdown-it-highlight'
 import MarkdownItFontAwsome from './markdown-it-font-awsome'
 import 'github-markdown-css'
 import 'markdown-it-latex/dist/index.css'
@@ -107,6 +108,7 @@ export default {
       .use(MarkdownItAbbreviation)
       .use(MarkdownItInsert)
       .use(MarkdownItMark)
+      .use(MarkdownItHighlight)
       .use(MarkdownItLatex)
       .use(MarkdownItFlowchart)
       .use(MarkdownItSourceMap)
