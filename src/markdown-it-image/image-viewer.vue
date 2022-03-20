@@ -46,7 +46,7 @@
         <div v-for="(url, i) in urlList" :key="url" class="image-container">
           <img
             v-if="i === index"
-            ref="img"
+            ref="imgRef"
             class="el-image-viewer__img"
             :src="currentImg"
             :style="imgStyle"
@@ -62,6 +62,7 @@
 
 <script>
 import { on, off, rafThrottle, isFirefox } from '../utils'
+import {defineComponent, ref, watch, toRef, toRefs, nextTick, computed, reactive} from 'vue'
 
 const Mode = {
   CONTAIN: {
@@ -76,9 +77,8 @@ const Mode = {
 
 const mousewheelEventName = isFirefox() ? 'DOMMouseScroll' : 'mousewheel'
 
-export default {
+export default defineComponent({
   name: 'elImageViewer',
-
   props: {
     urlList: {
       type: Array,
@@ -97,38 +97,36 @@ export default {
       default: 0,
     },
   },
+  emits: ['update:index'],
+  setup(props, { emit }){
 
-  data() {
-    return {
-      isShow: false,
-      infinite: true,
-      loading: false,
-      mode: Mode.CONTAIN,
+    const { urlList, index, onClose, onSwitch } = toRefs(props)
+
+    const imgRef = ref(null)
+    const infinite = ref(false)
+    const loading = ref(false)
+    const mode = ref(Mode.CONTAIN)
+    const zIndex = ref(2000)
+    const data = reactive({
       transform: {
         scale: 1,
         deg: 0,
         offsetX: 0,
         offsetY: 0,
         enableTransition: false,
-      },
-      zIndex: 2000,
-    }
-  },
-  computed: {
-    isSingle() {
-      return this.urlList.length <= 1
-    },
-    isFirst() {
-      return this.index === 0
-    },
-    isLast() {
-      return this.index === this.urlList.length - 1
-    },
-    currentImg() {
-      return this.urlList[this.index]
-    },
-    imgStyle() {
-      const { scale, deg, offsetX, offsetY, enableTransition } = this.transform
+      }
+    })
+    let _keyDownHandler = null
+    let _mouseWheelHandler = null
+    let _dragHandler = null
+
+    // computed
+    const isSingle = computed(()=> urlList.length <= 1);
+    const isFirst = computed(()=> index === 0);
+    const isLast = computed(()=> index === urlList.length - 1);
+    const currentImg = computed(()=> urlList[index]);
+    const imgStyle = computed(()=> {
+      const { scale, deg, offsetX, offsetY, enableTransition } = toRef(data,'transform')
       const style = {
         transform: `scale(${scale}) rotate(${deg}deg)`,
         transition: enableTransition ? 'transform .3s' : '',
@@ -139,60 +137,46 @@ export default {
         style.maxWidth = style.maxHeight = '100%'
       }
       return style
-    },
-  },
-  watch: {
-    index: {
-      handler: function (val) {
-        this.reset()
-        this.onSwitch(val)
-      },
-    },
-    currentImg() {
-      this.$nextTick(() => {
-        const $img = this.$refs.img[0]
-        if (!$img.complete) {
-          this.loading = true
-        }
-      })
-    },
-  },
-  methods: {
-    hide() {
-      this.deviceSupportUninstall()
-      this.onClose()
-    },
-    deviceSupportInstall() {
-      this._keyDownHandler = rafThrottle((e) => {
+    })
+
+    // methods
+    const hide = () => {
+      deviceSupportUninstall()
+      onClose()
+    }
+
+    const deviceSupportInstall = () => {
+      _keyDownHandler = rafThrottle((e) => {
         const keyCode = e.keyCode
         switch (keyCode) {
           // ESC
           case 27:
-            this.hide()
+            hide()
             break
           // SPACE
           case 32:
-            this.toggleMode()
+            toggleMode()
             break
           // LEFT_ARROW
           case 37:
-            this.prev()
+            prev()
             break
           // UP_ARROW
           case 38:
-            this.handleActions('zoomIn')
+            handleActions('zoomIn')
             break
           // RIGHT_ARROW
           case 39:
-            this.next()
+            next()
             break
           // DOWN_ARROW
           case 40:
-            this.handleActions('zoomOut')
+            handleActions('zoomOut')
             break
         }
       })
-      this._mouseWheelHandler = rafThrottle((e) => {
+
+      _mouseWheelHandler = rafThrottle((e) => {
         const delta = e.wheelDelta ? e.wheelDelta : -e.detail
         if (delta > 0) {
           this.handleActions('zoomIn', {
@@ -207,103 +191,150 @@ export default {
         }
       })
       on(document, 'keydown', this._keyDownHandler)
-      on(document, mousewheelEventName, this._mouseWheelHandler)
-    },
-    deviceSupportUninstall() {
-      off(document, 'keydown', this._keyDownHandler)
-      off(document, mousewheelEventName, this._mouseWheelHandler)
-      this._keyDownHandler = null
-      this._mouseWheelHandler = null
-    },
-    handleImgLoad() {
-      this.loading = false
-    },
-    handleImgError(e) {
-      this.loading = false
-      e.target.alt = '加载失败'
-    },
-    handleMouseDown(e) {
-      if (this.loading || e.button !== 0) return
+      on(document, mousewheelEventName, _mouseWheelHandler)
+    }
 
-      const { offsetX, offsetY } = this.transform
+    const deviceSupportUninstall = () => {
+      off(document, 'keydown', _keyDownHandler)
+      off(document, mousewheelEventName, _mouseWheelHandler)
+      _keyDownHandler = null
+      _mouseWheelHandler = null
+    }
+
+    const handleImgLoad = () => {
+      loading.value = false
+    }
+
+    const handleImgError = (e) => {
+      loading.value = false
+      e.target.alt = '加载失败'
+    }
+
+    const handleMouseDown = (e) => {
+      if (loading.value || e.button !== 0) return
+
+      const { offsetX, offsetY } = toRef(data, 'transform')
       const startX = e.pageX
       const startY = e.pageY
-      this._dragHandler = rafThrottle((ev) => {
-        this.transform.offsetX = offsetX + ev.pageX - startX
-        this.transform.offsetY = offsetY + ev.pageY - startY
+      _dragHandler = rafThrottle((ev) => {
+        data.transform.offsetX = offsetX + ev.pageX - startX
+        data.transform.offsetY = offsetY + ev.pageY - startY
       })
-      on(document, 'mousemove', this._dragHandler)
+      on(document, 'mousemove', _dragHandler)
       on(document, 'mouseup', () => {
-        off(document, 'mousemove', this._dragHandler)
+        off(document, 'mousemove', _dragHandler)
       })
 
       e.preventDefault()
-    },
-    reset() {
-      this.transform = {
+    }
+    
+    const reset = () => {
+      data.transform = {
         scale: 1,
         deg: 0,
         offsetX: 0,
         offsetY: 0,
         enableTransition: false,
       }
-    },
-    toggleMode() {
-      if (this.loading) return
+    }
+
+    const toggleMode = ()=> {
+      if (loading.value) return
 
       const modeNames = Object.keys(Mode)
       const modeValues = Object.values(Mode)
-      const index = modeValues.indexOf(this.mode)
-      const nextIndex = (index + 1) % modeNames.length
-      this.mode = Mode[modeNames[nextIndex]]
+      const handleIndex = modeValues.indexOf(mode.value)
+      const nextIndex = (handleIndex + 1) % modeNames.length
+      mode.value = Mode[modeNames[nextIndex]]
       this.reset()
-    },
-    prev() {
-      if (this.isFirst && !this.infinite) return
-      const len = this.urlList.length
-      const index = (this.index - 1 + len) % len
-      this.$emit('update:index', index)
-    },
-    next() {
-      if (this.isLast && !this.infinite) return
-      const len = this.urlList.length
-      const index = (this.index + 1) % len
-      this.$emit('update:index', index)
-    },
-    handleActions(action, options = {}) {
-      if (this.loading) return
+    }
+
+    const prev = () => {
+      if (isFirst.value && !infinite.value) return
+      const len = urlList.length
+      const handleIndex = (index - 1 + len) % len
+      emit('update:index', handleIndex)
+    }
+
+
+    const next = () => {
+      if (isLast.value && !infinite.value) return
+      const len = urlList.length
+      const handleIndex = (index + 1) % len
+      emit('update:index', handleIndex)
+    }
+
+    const handleActions = (action, options = {}) => {
+      if (loading.value) return
       const { zoomRate, rotateDeg, enableTransition } = {
         zoomRate: 0.2,
         rotateDeg: 90,
         enableTransition: true,
         ...options,
       }
-      const { transform } = this
+      const { scale } = toRef(data, 'transform')
       switch (action) {
         case 'zoomOut':
-          if (transform.scale > 0.2) {
-            transform.scale = parseFloat(
-              (transform.scale - zoomRate).toFixed(3)
+          if (scale > 0.2) {
+            data.transform.scale = parseFloat(
+              (scale - zoomRate).toFixed(3)
             )
           }
           break
         case 'zoomIn':
-          transform.scale = parseFloat((transform.scale + zoomRate).toFixed(3))
+          data.transform.scale = parseFloat((scale + zoomRate).toFixed(3))
           break
         case 'clocelise':
-          transform.deg += rotateDeg
+           data.transform.deg += rotateDeg
           break
         case 'anticlocelise':
-          transform.deg -= rotateDeg
+          data.transform.deg -= rotateDeg
           break
       }
-      transform.enableTransition = enableTransition
-    },
-  },
-  mounted() {
-    this.deviceSupportInstall()
-  },
-}
+      data.transform.enableTransition = enableTransition
+    }
+
+
+    // watch
+    watch(()=>props.index,(val) => {
+      reset()
+      onSwitch(val)
+    })
+
+    watch(()=>props.currentImg,() => {
+      nextTick(() => {
+        const $img = imgRef.value.img[0]
+        if (!$img.complete) {
+          loading.value = true
+        }
+      })
+    })
+
+    return {
+      infinite,
+      mode,
+      loading,
+      imgRef,
+      ...toRefs(data),
+      zIndex,
+      isSingle,
+      isFirst,
+      isLast,
+      currentImg,
+      imgStyle,
+      toggleMode,
+      deviceSupportInstall,
+      deviceSupportUninstall,
+      handleImgLoad,
+      handleImgError,
+      handleMouseDown,
+      prev,
+      next,
+      handleActions,
+    }
+  }
+})
+
 </script>
 
 <style scoped>

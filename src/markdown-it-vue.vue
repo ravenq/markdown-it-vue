@@ -8,7 +8,7 @@
     <image-viewer
       v-if="showViewer"
       :url-list="urlList"
-      v-model:index="index"
+      v-model="index"
       :on-close="closeViewer"
     />
   </div>

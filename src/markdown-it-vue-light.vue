@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 import {defineComponent, ref, watch, toRefs, nextTick} from 'vue'
 import MarkdownIt from 'markdown-it'
 import MarkdownItEmoji from 'markdown-it-emoji'
