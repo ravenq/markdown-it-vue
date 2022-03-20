@@ -41,7 +41,7 @@ import MarkdownItImage from './markdown-it-image'
 import 'github-markdown-css'
 import 'markdown-it-latex/dist/index.css'
 
-import echarts from 'echarts/dist/echarts.simple.min'
+import * as echarts from 'echarts/dist/echarts.simple.min'
 import mermaid from 'mermaid'
 import flowchart from 'flowchart.js'
 import ImageViewer from './markdown-it-image/image-viewer.vue'
