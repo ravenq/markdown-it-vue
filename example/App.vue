@@ -4,15 +4,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Example from './components/example.vue'
-
-export default {
-  name: 'app',
-  components: {
-    Example
-  }
-}
 </script>
 
 <style>

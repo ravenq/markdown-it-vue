@@ -5,23 +5,26 @@
       class="md-body" 
       :content="content" 
       :options="options" 
-      @render-complete=hdlCmplete 
+      @render-complete="hdlCmplete" 
     />
   </div>
 </template>
 
 <script>
+import {defineComponent, ref} from 'vue'
 import MarkdownText from './example'
 import MarkdownItVue from '../../src'
-export default {
+
+export default defineComponent({
   components: {
     MarkdownItVue
   },
-  data () {
-    return {
-      content: MarkdownText,
-      options: {
-        markdownIt: {
+  setup() {
+
+    const options = ref(
+      {
+        markdownIt: 
+        {
           linkify: true
         },
         linkAttributes: {
@@ -31,14 +34,21 @@ export default {
           }
         }
       }
-    }
-  },
-  methods: {
-    hdlCmplete() {
+    )
+
+    const content = ref(MarkdownText)
+
+    const hdlCmplete = () => {
       console.log('reder complete')
     }
+
+    return {
+      content,
+      options,
+      hdlCmplete,
+    }
   }
-}
+})
 </script>
 
 <style scoped>

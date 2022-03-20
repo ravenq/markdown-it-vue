@@ -1,4 +1,4 @@
-import MarkdownItVue from './markdown-it-vue'
+import MarkdownItVue from './markdown-it-vue-light'
 
 const install = function (Vue) {
   Vue.component(MarkdownItVue.name, MarkdownItVue)

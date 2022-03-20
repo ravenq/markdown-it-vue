@@ -2,19 +2,20 @@
   <div>
     <div
       class="markdown-body"
-      ref="markdown-it-vue-container"
+      ref="markdownRef"
       @click="hdlClick"
     />
     <image-viewer
       v-if="showViewer"
       :url-list="urlList"
-      :index.sync="index"
+      v-model:index="index"
       :on-close="closeViewer"
     />
   </div>
 </template>
 
 <script>
+import {defineComponent, ref, watch, toRefs, nextTick, reactive} from 'vue'
 import MarkdownIt from 'markdown-it'
 import MarkdownItEmoji from 'markdown-it-emoji'
 import MarkdownItSubscript from 'markdown-it-sub'
@@ -70,12 +71,14 @@ const DEFAULT_OPTIONS_IMAGE = {
   viewer: true
 }
 
-export default {
-  components: { ImageViewer },
+
+export default defineComponent({
   name: 'markdown-it-vue',
+  components: { ImageViewer },
   props: {
     content: {
-      type: String
+      type: String,
+      default: ''
     },
     options: {
       type: Object,
@@ -93,61 +96,29 @@ export default {
       }
     }
   },
-  watch: {
-    content: {
-      immediate: true,
-      handler(val) {
-        this.urlSet.clear()
-        this.$nextTick(() => {
-          this.$refs['markdown-it-vue-container'].innerHTML = this.md.render(
-            val
-          )
-          // render echarts
-          document.querySelectorAll('.md-echarts').forEach(element => {
-            try {
-              let options = JSON.parse(element.textContent)
-              let chart = echarts.init(element)
-              chart.setOption(options)
-            } catch (e) {
-              element.outerHTML = `<pre>echarts complains: ${e}</pre>`
-            }
-          })
-          // render mermaid
-          mermaid.init(undefined, document.querySelectorAll('.mermaid'))
-          // render flowchart
-          document.querySelectorAll('.md-flowchart').forEach(element => {
-            try {
-              let code = element.textContent
-              let chart = flowchart.parse(code)
-              element.textContent = ''
-              chart.drawSVG(element)
-            } catch (e) {
-              element.outerHTML = `<pre>flowchart complains: ${e}</pre>`
-            }
-          })
+  emits: ['render-complete'],
+  setup(props, { emit, expose }){
+    const {
+      markdownIt, 
+      linkAttributes = DEFAULT_OPTIONS_LINK_ATTRIBUTES,
+      katex = DEFAULT_OPTIONS_KATEX,
+      tasklists = DEFAULT_OPTIONS_TASKLISTS,
+      githubToc = DEFAULT_OPTIONS_GITHUBTOC,
+      image = DEFAULT_OPTIONS_IMAGE,
+    } = toRefs(props);
 
-          let list = []
-          for (const i of this.urlSet) {
-            list.push(i)
-          }
-          this.urlList = list
-          // emit event
-          this.$emit('render-complete')
-        })
-      }
-    }
-  },
-  data() {
-    const optMarkdownIt = this.options.markdownIt
-    const linkAttributes = this.options.linkAttributes || DEFAULT_OPTIONS_LINK_ATTRIBUTES
-    const optKatex = this.options.katex || DEFAULT_OPTIONS_KATEX
-    const optTasklists = this.options.tasklists || DEFAULT_OPTIONS_TASKLISTS
-    const optGithubToc = this.options.githubToc || DEFAULT_OPTIONS_GITHUBTOC
-    const optMermaid = this.options.mermaid || DEFAULT_OPTIONS_MERMAID
-    const optImage = this.options.image || DEFAULT_OPTIONS_IMAGE
-    optImage.urlSet = new Set()
+    const markdownRef = ref(null);
+    const index = ref(0);
+    const showViewer = ref(false);
+    const optImage = image;
+    const optMermaid = props.mermaid || DEFAULT_OPTIONS_MERMAID
+    const data = reactive({
+      urlList: [],
+    });
+    optImage.urlSet = new Set();
 
-    let md = new MarkdownIt(optMarkdownIt)
+
+    const md = new MarkdownIt(markdownIt)
       .use(MarkdownItEmoji)
       .use(MarkdownItSubscript)
       .use(MarkdownItSuperscript)
@@ -163,10 +134,10 @@ export default {
       .use(MarkdownItEcharts)
       .use(MarkdownItFlowchart)
       .use(MarkdownItLinkAttributes, linkAttributes)
-      .use(MarkdownItKatex, optKatex)
-      .use(MarkdownItTasklists, optTasklists)
+      .use(MarkdownItKatex, katex)
+      .use(MarkdownItTasklists, tasklists)
       .use(MarkdownItFontAwsome)
-      .use(MarkdownItGithubToc, optGithubToc)
+      .use(MarkdownItGithubToc, githubToc)
       .use(MarkdownItImage, optImage)
       .use(MarkdownItContainer, 'warning', {
         validate: function(params) {
@@ -220,33 +191,75 @@ export default {
           }
         }
       })
-    return {
-      md: md,
-      urlSet: optImage.urlSet,
-      viewer: optImage.viewer,
-      showViewer: false,
-      index: 0,
-      urlList: []
+
+    watch(() => props.content, (val)=>{
+      optImage.urlSet.clear()
+        nextTick(() => {
+          markdownRef.value.innerHTML = md.render(val)
+          // render echarts
+          document.querySelectorAll('.md-echarts').forEach(element => {
+            try {
+              let options = JSON.parse(element.textContent)
+              let chart = echarts.init(element)
+              chart.setOption(options)
+            } catch (e) {
+              element.outerHTML = `<pre>echarts complains: ${e}</pre>`
+            }
+          })
+          // render mermaid
+          mermaid.init(undefined, document.querySelectorAll('.mermaid'))
+          // render flowchart
+          document.querySelectorAll('.md-flowchart').forEach(element => {
+            try {
+              let code = element.textContent
+              let chart = flowchart.parse(code)
+              element.textContent = ''
+              chart.drawSVG(element)
+            } catch (e) {
+              element.outerHTML = `<pre>flowchart complains: ${e}</pre>`
+            }
+          })
+
+          let list = []
+          for (const i of optImage.urlSet) {
+            list.push(i)
+          }
+          data.urlList = list
+          // emit event
+          emit('render-complete')
+      })
+    },{immediate: true})
+
+    // methods
+    const use = (plugin, options) => {
+      md.use(plugin, options)
     }
-  },
-  methods: {
-    use(plugin, options) {
-      this.md.use(plugin, options)
-    },
-    get() {
-      return this.md
-    },
-    hdlClick(e) {
-      if (this.viewer && e.target.tagName == 'IMG') {
-        this.index = this.urlList.indexOf(e.target.src) || 0
-        this.showViewer = true
+
+    const get = () => {
+       return this.md
+    }
+
+    const hdlClick = (e) => {
+      if (optImage.viewer && e.target.tagName == 'IMG') {
+        index.value = data.urlList.indexOf(e.target.src) || 0
+        showViewer.value = true
       }
-    },
-    closeViewer() {
-      this.showViewer = false
+    }
+
+    expose({
+      use, 
+      get
+    })
+
+    return {
+      markdownRef,
+      showViewer,
+      index,
+      urlSet: data.urlSet,
+      hdlClick
     }
   }
-}
+})
 </script>
 
 <style lange="scss">
