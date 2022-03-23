@@ -23,11 +23,12 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "dev": "vue-cli-service serve ./example/main.js",
-    "build": "npm run build:lib && npm run build:light && npm run build:example",
+    "build": "npm run build:lib && npm run build:light && npm run build:minimal && npm run build:example",
     "lint": "vue-cli-service lint",
     "build:example": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --dest example/dist ./example/main.js",
     "build:lib": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib ./src/index.js",
-    "build:light": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name markdown-it-vue-light --no-clean ./src/index-light.js"
+    "build:light": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name markdown-it-vue-light --no-clean ./src/index-light.js",
+    "build:minimal": "node --max_old_space_size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name markdown-it-vue-minimal --no-clean ./src/index-minimal.js"
   },
   "main": "dist/markdown-it-vue.umd.min.js",
   "dependencies": {
