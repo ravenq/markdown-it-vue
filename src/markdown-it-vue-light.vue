@@ -1,8 +1,9 @@
 <template>
-  <div class="markdown-body" ref="markdown-it-vue-container"></div>
+  <div class="markdown-body" ref="markdownRef"></div>
 </template>
 
 <script>
+import {defineComponent, ref, watch, toRefs, nextTick} from 'vue'
 import MarkdownIt from 'markdown-it'
 import MarkdownItEmoji from 'markdown-it-emoji'
 import MarkdownItSubscript from 'markdown-it-sub'
@@ -47,7 +48,8 @@ const DEFAULT_OPTIONS_GITHUBTOC = {
   anchorLinkSymbolClassName: 'octicon octicon-link'
 }
 
-export default {
+
+export default defineComponent({
   name: 'markdown-it-vue-light',
   props: {
     content: {
@@ -68,50 +70,19 @@ export default {
       }
     }
   },
-  watch: {
-    content: {
-      immediate: true,
-      handler(val) {
-        this.$nextTick(() => {
-          this.$refs['markdown-it-vue-container'].innerHTML = this.md.render(
-            val
-          )
-          // render echarts
-          document.querySelectorAll('.md-echarts').forEach(element => {
-            try {
-              let options = JSON.parse(element.textContent)
-              let chart = echarts.init(element)
-              chart.setOption(options)
-            } catch (e) {
-              element.outerHTML = `<pre>echarts complains: ${e}</pre>`
-            }
-          })
-          // render flowchart
-          document.querySelectorAll('.md-flowchart').forEach(element => {
-            try {
-              let code = element.textContent
-              let chart = flowchart.parse(code)
-              element.textContent = ''
-              chart.drawSVG(element)
-            } catch (e) {
-              element.outerHTML = `<pre>flowchart complains: ${e}</pre>`
-            }
-          })
+  emits: ['render-complete'],
+  setup(props,{emit, expose}){
+    const {
+      markdownIt, 
+      linkAttributes = DEFAULT_OPTIONS_LINK_ATTRIBUTES,
+      katex = DEFAULT_OPTIONS_KATEX,
+      tasklists = DEFAULT_OPTIONS_TASKLISTS,
+      githubToc = DEFAULT_OPTIONS_GITHUBTOC,
+    } = toRefs(props);
 
-          // emit event
-          this.$emit('render-complete')
-        })
-      }
-    }
-  },
-  data() {
-    const optMarkdownIt = this.options.markdownIt
-    const linkAttributes = this.options.linkAttributes || DEFAULT_OPTIONS_LINK_ATTRIBUTES
-    const optKatex = this.options.katex || DEFAULT_OPTIONS_KATEX
-    const optTasklists = this.options.tasklists || DEFAULT_OPTIONS_TASKLISTS
-    const optGithubToc = this.options.githubToc || DEFAULT_OPTIONS_GITHUBTOC
+    const markdownRef = ref(null);
 
-    let md = new MarkdownIt(optMarkdownIt)
+    const md = new MarkdownIt(markdownIt)
       .use(MarkdownItEmoji)
       .use(MarkdownItSubscript)
       .use(MarkdownItSuperscript)
@@ -126,10 +97,10 @@ export default {
       .use(MarkdownItEcharts)
       .use(MarkdownItFlowchart)
       .use(MarkdownItLinkAttributes, linkAttributes)
-      .use(MarkdownItKatex, optKatex)
-      .use(MarkdownItTasklists, optTasklists)
+      .use(MarkdownItKatex, katex)
+      .use(MarkdownItTasklists, tasklists)
       .use(MarkdownItFontAwsome)
-      .use(MarkdownItGithubToc, optGithubToc)
+      .use(MarkdownItGithubToc, githubToc)
       .use(MarkdownItContainer, 'warning', {
         validate: function(params) {
           return params.trim() === 'warning'
@@ -182,19 +153,59 @@ export default {
           }
         }
       })
-    return {
-      md: md
+
+    watch(() => props.content,(val) => {
+      nextTick(() => {
+          markdownRef.value.innerHTML = md.render(
+            val
+          )
+          // render echarts
+          document.querySelectorAll('.md-echarts').forEach(element => {
+            try {
+              let options = JSON.parse(element.textContent)
+              let chart = echarts.init(element)
+              chart.setOption(options)
+            } catch (e) {
+              element.outerHTML = `<pre>echarts complains: ${e}</pre>`
+            }
+          })
+          // render flowchart
+          document.querySelectorAll('.md-flowchart').forEach(element => {
+            try {
+              let code = element.textContent
+              let chart = flowchart.parse(code)
+              element.textContent = ''
+              chart.drawSVG(element)
+            } catch (e) {
+              element.outerHTML = `<pre>flowchart complains: ${e}</pre>`
+            }
+          })
+
+          // emit event
+          emit('render-complete')
+        })
+    }, {immediate: true})
+
+    // methods
+    const use = (plugin, options) => {
+      md.use(plugin, options)
     }
-  },
-  methods: {
-    use(plugin, options) {
-      this.md.use(plugin, options)
-    },
-    get() {
-      return this.md
+
+    const get = () => {
+      return md
+    }
+
+    expose({
+      use,
+      get
+    })
+
+    return {
+      markdownRef,
+      md
     }
   }
-}
+})
 </script>
 
 <style lange="scss">
