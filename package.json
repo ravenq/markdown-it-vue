@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-vue",
-  "version": "2.0.0",
+  "version": "1.1.7",
   "private": false,
   "description": "The vue3.0 lib for markdown-it",
   "author": {
