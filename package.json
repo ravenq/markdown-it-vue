@@ -53,7 +53,7 @@
     "markdown-it-sup": "^1.0.0",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-and-anchor": "^4.2.0",
-    "mermaid": "^8.9.2",
+    "mermaid": "^9.1.2",
     "vue": "^2.6.12"
   },
   "devDependencies": {
