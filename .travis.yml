@@ -1,13 +1,19 @@
 language: node_js
-node_js:
-  - "10"
-script:
-  - yarn build
+cache:
+  - npm
+
+env:
+  global:
+    - NPM_BASE=https://ibdolphin.jfrog.io/ibdolphin/api/npm
+    - NPM_PUSH_REGISTRY=$NPM_BASE/npm-private/
+
+before_install:
+  - curl -u$NPM_PUBLISHER_LOGIN $NPM_BASE/auth >> ~/.npmrc
+  - curl -u$NPM_PUBLISHER_LOGIN $NPM_BASE/Ibotta-npm/auth/ibotta >> ~/.npmrc
 
 deploy:
-  provider: npm
-  email: flw_dream@126.com
-  api_key: "$NPM_TOKEN"
-  skip_cleanup: true
-  on:
-    tags: true
+  - provider: script
+    script: npm run deploy
+    skip_cleanup: true
+    on:
+      tags: true
