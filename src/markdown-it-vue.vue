@@ -108,6 +108,7 @@ export default {
               let options = JSON.parse(element.textContent)
               let chart = echarts.init(element)
               chart.setOption(options)
+              element.className = "md-echarts-new";
             } catch (e) {
               element.outerHTML = `<pre>echarts complains: ${e}</pre>`
             }
